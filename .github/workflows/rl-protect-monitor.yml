@@ -1,0 +1,47 @@
+# Test harness for kburich/rl-protect-monitor.
+#
+# Pinned to @main on purpose: the reusable workflow
+# (rl-protect-monitor/.github/workflows/monitor.yml) hard-pins the action at
+# @v2 internally, so calling it would test the release rather than the working
+# tree. Use the direct-action form while iterating, and switch to the reusable
+# form once as a separate check that its input plumbing is right.
+#
+# Manual dispatch only for now. Each run spends Spectra Assure entitlement
+# units, so runs should be deliberate; add the cron once the staircase passes.
+
+name: Dependency monitor (test)
+
+on:
+  workflow_dispatch: {}
+  # schedule:
+  #   - cron: "0 6 * * *"
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # baseline commit-back to the orphan branch
+      issues: write     # rolling notification issues
+    # Matches the group used by the action's own examples, so dispatching
+    # twice in quick succession queues instead of cancelling — a cancelled run
+    # may already have posted its delta without committing the baseline.
+    concurrency:
+      group: rl-protect-monitor-${{ github.repository }}-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: rl
+        uses: kburich/rl-protect-monitor@main
+        with:
+          rl-token: ${{ secrets.RL_TOKEN }}
+          # Auto-detection should pick package-lock.json; left implicit so the
+          # detection order itself is under test.
+
+      # The outputs are half of the contract, and the job summary does not
+      # show them. Echo them so each step of the staircase is checkable from
+      # the run page without downloading the delta artifact.
+      - name: Echo outputs
+        env:
+          OUTPUTS: ${{ toJSON(steps.rl.outputs) }}
+        run: echo "$OUTPUTS" | jq .
