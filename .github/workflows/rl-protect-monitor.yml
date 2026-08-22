@@ -37,6 +37,10 @@ jobs:
         uses: kburich/rl-protect-monitor@main
         with:
           rl-token: ${{ secrets.RL_TOKEN }}
+          # Subscribes kburich when a rolling issue is opened. A thread
+          # subscription cannot cover the malware issue, which does not exist
+          # until the first 🚨 finding — assignment is what reaches someone.
+          assignees: kburich
           # Auto-detection should pick package-lock.json; left implicit so the
           # detection order itself is under test.
 
