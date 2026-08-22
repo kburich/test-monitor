@@ -6,15 +6,16 @@
 # tree. Use the direct-action form while iterating, and switch to the reusable
 # form once as a separate check that its input plumbing is right.
 #
-# The cron is live now that the staircase has passed. Each run spends Spectra
-# Assure entitlement units, so daily is deliberate — the database does not
-# update faster than that. workflow_dispatch stays for on-demand testing.
+# TEMPORARY: every 10 minutes, to get a scheduled run to fire quickly while
+# testing notifications. Each run spends Spectra Assure entitlement units, and
+# at this cadence that is ~144 scans a day against a Community entitlement.
+# Restore the daily line below as soon as the notification test is done.
 
 name: Dependency monitor (test)
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "*/10 * * * *"   # TEMPORARY — restore "0 6 * * *"
   workflow_dispatch: {}
 
 jobs:
