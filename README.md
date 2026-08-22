@@ -46,9 +46,12 @@ Each step exercises something the unit tests cannot:
    findings now read as new: the rolling issue opens, the delta lands as a
    collapsible comment, and the cumulative stats start counting. Subscribe to
    the issue first and read the actual email.
-4. **Resolution path.** Inject a synthetic finding record into the baseline and
-   dispatch. Expect the issue body to re-render with updated counters and *no*
-   comment.
+4. **Resolution path.** Remove an alerted package from the lockfile and
+   dispatch — `lodash` was used for this. Resolving via the lockfile rather
+   than by injecting a synthetic baseline record matters: a synthetic record
+   was never alerted on, so it exercises neither the `resolved` counter nor
+   the `outstanding` arithmetic. Expect the issue body to re-render with
+   updated counters, `runs with alerts` *not* incremented, and *no* comment.
 5. **The wrapper.** Swap to the reusable workflow, dispatch once, confirm the
    inputs still thread through.
 
