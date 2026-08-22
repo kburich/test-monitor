@@ -6,16 +6,16 @@
 # tree. Use the direct-action form while iterating, and switch to the reusable
 # form once as a separate check that its input plumbing is right.
 #
-# TEMPORARY: every 10 minutes, to get a scheduled run to fire quickly while
-# testing notifications. Each run spends Spectra Assure entitlement units, and
-# at this cadence that is ~144 scans a day against a Community entitlement.
-# Restore the daily line below as soon as the notification test is done.
+# Twice daily. Each run spends Spectra Assure entitlement units, so the
+# cadence is deliberate — the database does not update faster than this.
+# workflow_dispatch stays for on-demand testing. Note that GitHub cron is
+# best-effort: a firing can slip by an hour or be skipped under load.
 
 name: Dependency monitor (test)
 
 on:
   schedule:
-    - cron: "*/10 * * * *"   # TEMPORARY — restore "0 6 * * *"
+    - cron: "0 6,18 * * *"
   workflow_dispatch: {}
 
 jobs:
