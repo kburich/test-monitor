@@ -1,9 +1,9 @@
 {
   "schema": 2,
-  "generated": "2026-08-22T04:39:17+0000",
+  "generated": "2026-08-22T04:50:48+0000",
   "manifest": "package-lock.json",
   "scan": {
-    "timestamp": "2026-08-22T04:39:17Z",
+    "timestamp": "2026-08-22T04:50:47Z",
     "catalogue": 6,
     "profile": "Open Source [baseline]",
     "schema": 1
@@ -17,13 +17,90 @@
       "resolved": 0
     },
     "standard": {
-      "runs": 0,
-      "new": 0,
+      "runs": 1,
+      "new": 7,
       "changed": 0,
       "resolved": 0
     }
   },
   "findings": [
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2019-10744",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to Prototype Pollution via the defaultsDeep function.",
+      "severity": "standard",
+      "score": 9.100000381469727,
+      "alerted": true
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2020-28500",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to Regular Expression Denial of Service (ReDoS) via the toNumber, trim and trimEnd functions.",
+      "severity": "standard",
+      "score": 5.300000190734863,
+      "alerted": true
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2020-8203",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to prototype pollution when using _.zipObjectDeep.",
+      "severity": "standard",
+      "score": 7.400000095367432,
+      "alerted": true
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2021-23337",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to Command Injection via the template function.",
+      "severity": "standard",
+      "score": 7.199999809265137,
+      "alerted": true
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2025-13465",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to prototype pollution in the _.unset and _.omit functions, allowing an attacker to delete methods from global prototypes.",
+      "severity": "standard",
+      "score": 6.900000095367432,
+      "alerted": true
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2026-2950",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to prototype pollution via array path bypass in _.unset and _.omit functions.",
+      "severity": "standard",
+      "score": 5.300000190734863,
+      "alerted": true
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2026-4800",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to code injection via _.template imports key names, allowing an attacker to inject arbitrary code at template compilation time.",
+      "severity": "standard",
+      "score": 9.800000190734863,
+      "alerted": true
+    },
     {
       "purl": "pkg:npm/minimist@1.2.0",
       "category": "vulnerabilities",
