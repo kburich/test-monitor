@@ -6,15 +6,16 @@
 # tree. Use the direct-action form while iterating, and switch to the reusable
 # form once as a separate check that its input plumbing is right.
 #
-# Manual dispatch only for now. Each run spends Spectra Assure entitlement
-# units, so runs should be deliberate; add the cron once the staircase passes.
+# The cron is live now that the staircase has passed. Each run spends Spectra
+# Assure entitlement units, so daily is deliberate — the database does not
+# update faster than that. workflow_dispatch stays for on-demand testing.
 
 name: Dependency monitor (test)
 
 on:
+  schedule:
+    - cron: "0 6 * * *"
   workflow_dispatch: {}
-  # schedule:
-  #   - cron: "0 6 * * *"
 
 jobs:
   monitor:
