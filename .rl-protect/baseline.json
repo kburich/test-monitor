@@ -1,9 +1,9 @@
 {
   "schema": 2,
-  "generated": "2026-08-22T18:35:38+0000",
+  "generated": "2026-08-23T06:47:36+0000",
   "manifest": "package-lock.json",
   "scan": {
-    "timestamp": "2026-08-22T18:35:37Z",
+    "timestamp": "2026-08-23T06:47:36Z",
     "catalogue": 6,
     "profile": "Open Source [baseline]",
     "schema": 1
@@ -17,8 +17,8 @@
       "resolved": 0
     },
     "standard": {
-      "runs": 3,
-      "new": 16,
+      "runs": 4,
+      "new": 18,
       "changed": 0,
       "resolved": 7
     }
@@ -142,6 +142,28 @@
       "title": "Moment.js is vulnerable to a Regular Expression Denial of Service (ReDoS) attack due to inefficient parsing algorithm.",
       "severity": "standard",
       "score": 7.5
+    },
+    {
+      "purl": "pkg:npm/node-fetch@2.6.0",
+      "category": "vulnerabilities",
+      "id": "CVE-2020-15168",
+      "status": "warn",
+      "count": 1,
+      "title": "node-fetch does not honor the size option after following a redirect, potentially leading to denial of service or resource exhaustion.",
+      "severity": "standard",
+      "score": 5.300000190734863,
+      "alerted": true
+    },
+    {
+      "purl": "pkg:npm/node-fetch@2.6.0",
+      "category": "vulnerabilities",
+      "id": "CVE-2022-0235",
+      "status": "warn",
+      "count": 1,
+      "title": "node-fetch exposes sensitive information to an unauthorized actor by forwarding secure headers to untrusted sites.",
+      "severity": "standard",
+      "score": 6.099999904632568,
+      "alerted": true
     }
   ]
 }
