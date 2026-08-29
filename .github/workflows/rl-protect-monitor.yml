@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - id: rl
-        uses: kburich/rl-protect-monitor@feat/append-only-issues
+        uses: kburich/rl-protect-monitor@main
         with:
           rl-token: ${{ secrets.RL_TOKEN }}
           # Subscribes kburich when a rolling issue is opened. A thread
