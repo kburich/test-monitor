@@ -6,19 +6,17 @@
 # tree. Use the direct-action form while iterating, and switch to the reusable
 # form once as a separate check that its input plumbing is right.
 #
-# Every push to main is a run while the staircase is being walked — the
-# steps are driven by commits (lockfile edits, baseline edits) rather than by
-# manual dispatch. The twice-daily cron is paused meanwhile so a scheduled
-# firing cannot land between two steps; re-enable it once the staircase
-# passes. Each run spends Spectra Assure entitlement units.
+# Twice daily. Each run spends Spectra Assure entitlement units, so the
+# cadence is deliberate — the database does not update faster than this.
+# workflow_dispatch stays for on-demand testing. While a staircase is being
+# walked, swap the schedule for `push: branches: [main]` so commits drive
+# the runs and a cron firing cannot land between two steps.
 
 name: Dependency monitor (test)
 
 on:
-  push:
-    branches: [main]
-  # schedule:
-  #   - cron: "0 6,18 * * *"
+  schedule:
+    - cron: "0 6,18 * * *"
   workflow_dispatch: {}
 
 jobs:
