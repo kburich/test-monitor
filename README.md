@@ -22,37 +22,38 @@ packages keep the scan small, and scans are metered in entitlement units.
 
 ## Running it
 
-Manual dispatch only; the cron in the workflow is commented out until the
-staircase below passes. `RL_TOKEN` must be set as a repo secret.
+`RL_TOKEN` must be set as a repo secret. While a staircase is being walked the
+workflow runs on every push to `main` and the cron is commented out; once it
+passes, drop the push trigger and re-enable the cron.
 
-The workflow pins the action at `@main`, not `@v2` — see the comment at the top
-of `.github/workflows/rl-protect-monitor.yml` for why.
+The workflow pins the action at the branch under test, not `@v2` — see the
+comment at the top of `.github/workflows/rl-protect-monitor.yml` for why.
 
-## The staircase
+## The staircase (append-only issues)
 
-Each step exercises something the unit tests cannot:
+The rolling issue is an append-only alert log: its body is written once, at
+creation, with that run's delta, and every later delta — resolutions included
+— is a comment. Nothing is ever edited. Each step exercises something the unit
+tests cannot:
 
-0. **Dry run.** Dispatch from a non-default branch. The action scopes that to a
-   dry run: scan, job summary and delta artifact, but no baseline commit and
-   nothing posted. Confirms token wiring and manifest auto-detection before
-   anything durable is written.
-1. **First run on `main`.** Expect the `rl-protect-baseline/<monitor-id>` orphan
-   branch to be created, no issue, and a job summary reporting the pre-existing
-   backlog.
-2. **Immediate re-dispatch, nothing changed.** Expect a no-op, and *no* new
-   baseline commit — the findings payload is identical.
-3. **Force a new delta.** Strip a few finding records out of
-   `rl-protect-baseline/<id>:.rl-protect/baseline.json`, push, dispatch. Those
-   findings now read as new: the rolling issue opens, the delta lands as a
-   collapsible comment, and the cumulative stats start counting. Subscribe to
-   the issue first and read the actual email.
-4. **Resolution path.** Remove an alerted package from the lockfile and
-   dispatch — `lodash` was used for this. Resolving via the lockfile rather
-   than by injecting a synthetic baseline record matters: a synthetic record
-   was never alerted on, so it exercises neither the `resolved` counter nor
-   the `outstanding` arithmetic. Expect the issue body to re-render with
-   updated counters, `runs with alerts` *not* incremented, and *no* comment.
-5. **The wrapper.** Swap to the reusable workflow, dispatch once, confirm the
+1. **Migration.** Push with nothing else changed, against a schema-2 baseline
+   from the previous design. Expect exactly one baseline commit (schema 3, the
+   `stats` block and `alerted` flags gone), no comment on the open issue, and
+   its body untouched.
+2. **Quiet run.** Push a no-op. Expect no baseline commit and no comment.
+3. **New delta on an existing issue.** Strip a few finding records out of
+   `rl-protect-baseline/<id>:.rl-protect/baseline.json`, push there, then
+   push a no-op to `main`. Those findings read as new: a comment lands on the
+   open issue and the body — still the old stats page — is not edited.
+4. **Resolution comment.** Remove a package from the lockfile and push.
+   Expect a comment headlined `N resolved` with a `Resolved findings` table,
+   no 🚨, and — again — no body edit.
+5. **Resolution with no open issue.** Close the issue, remove another package
+   from the lockfile, push. Expect *nothing*: no issue opened, no comment.
+6. **Fresh issue.** Strip findings from the baseline again and push a no-op.
+   Expect a new issue whose body *is* the delta comment rendering, `kburich`
+   assigned, and no follow-up comment on it.
+7. **The wrapper.** Swap to the reusable workflow, dispatch once, confirm the
    inputs still thread through.
 
 The malware path cannot be manufactured this way — stripping the baseline only

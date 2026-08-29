@@ -1,21 +1,24 @@
 # Test harness for kburich/rl-protect-monitor.
 #
-# Pinned to @main on purpose: the reusable workflow
+# Pinned to the branch under test, not @v2: the reusable workflow
 # (rl-protect-monitor/.github/workflows/monitor.yml) hard-pins the action at
 # @v2 internally, so calling it would test the release rather than the working
 # tree. Use the direct-action form while iterating, and switch to the reusable
 # form once as a separate check that its input plumbing is right.
 #
-# Twice daily. Each run spends Spectra Assure entitlement units, so the
-# cadence is deliberate — the database does not update faster than this.
-# workflow_dispatch stays for on-demand testing. Note that GitHub cron is
-# best-effort: a firing can slip by an hour or be skipped under load.
+# Every push to main is a run while the staircase is being walked — the
+# steps are driven by commits (lockfile edits, baseline edits) rather than by
+# manual dispatch. The twice-daily cron is paused meanwhile so a scheduled
+# firing cannot land between two steps; re-enable it once the staircase
+# passes. Each run spends Spectra Assure entitlement units.
 
 name: Dependency monitor (test)
 
 on:
-  schedule:
-    - cron: "0 6,18 * * *"
+  push:
+    branches: [main]
+  # schedule:
+  #   - cron: "0 6,18 * * *"
   workflow_dispatch: {}
 
 jobs:
@@ -34,7 +37,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - id: rl
-        uses: kburich/rl-protect-monitor@main
+        uses: kburich/rl-protect-monitor@feat/append-only-issues
         with:
           rl-token: ${{ secrets.RL_TOKEN }}
           # Subscribes kburich when a rolling issue is opened. A thread
