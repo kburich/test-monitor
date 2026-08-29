@@ -1,9 +1,9 @@
 {
   "schema": 3,
-  "generated": "2026-08-29T09:58:00+0000",
+  "generated": "2026-08-29T09:59:15+0000",
   "manifest": "package-lock.json",
   "scan": {
-    "timestamp": "2026-08-29T09:58:00Z",
+    "timestamp": "2026-08-29T09:59:14Z",
     "catalogue": 6,
     "profile": "Open Source [baseline]",
     "schema": 1
@@ -76,6 +76,26 @@
       "status": "fail",
       "count": 1,
       "title": "Lodash is vulnerable to code injection via _.template imports key names, allowing an attacker to inject arbitrary code at template compilation time.",
+      "severity": "standard",
+      "score": 9.800000190734863
+    },
+    {
+      "purl": "pkg:npm/minimist@1.2.0",
+      "category": "vulnerabilities",
+      "id": "CVE-2020-7598",
+      "status": "fail",
+      "count": 1,
+      "title": "minimist is vulnerable to prototype pollution via a 'constructor' or '__proto__' payload.",
+      "severity": "standard",
+      "score": 5.599999904632568
+    },
+    {
+      "purl": "pkg:npm/minimist@1.2.0",
+      "category": "vulnerabilities",
+      "id": "CVE-2021-44906",
+      "status": "fail",
+      "count": 1,
+      "title": "Minimist is vulnerable to Prototype Pollution via the setKey function.",
       "severity": "standard",
       "score": 9.800000190734863
     }
