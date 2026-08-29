@@ -1,9 +1,9 @@
 {
   "schema": 3,
-  "generated": "2026-08-29T09:59:15+0000",
+  "generated": "2026-08-29T20:43:48+0000",
   "manifest": "package-lock.json",
   "scan": {
-    "timestamp": "2026-08-29T09:59:14Z",
+    "timestamp": "2026-08-29T20:43:47Z",
     "catalogue": 6,
     "profile": "Open Source [baseline]",
     "schema": 1
@@ -98,6 +98,46 @@
       "title": "Minimist is vulnerable to Prototype Pollution via the setKey function.",
       "severity": "standard",
       "score": 9.800000190734863
+    },
+    {
+      "purl": "pkg:npm/moment@2.29.1",
+      "category": "vulnerabilities",
+      "id": "CVE-2022-24785",
+      "status": "fail",
+      "count": 1,
+      "title": "Moment.js is vulnerable to a path traversal vulnerability when a user-provided locale string is directly used to switch moment locale.",
+      "severity": "standard",
+      "score": 7.5
+    },
+    {
+      "purl": "pkg:npm/moment@2.29.1",
+      "category": "vulnerabilities",
+      "id": "CVE-2022-31129",
+      "status": "fail",
+      "count": 1,
+      "title": "Moment.js is vulnerable to a Regular Expression Denial of Service (ReDoS) attack due to inefficient parsing algorithm.",
+      "severity": "standard",
+      "score": 7.5
+    },
+    {
+      "purl": "pkg:npm/node-fetch@2.6.0",
+      "category": "vulnerabilities",
+      "id": "CVE-2020-15168",
+      "status": "warn",
+      "count": 1,
+      "title": "node-fetch does not honor the size option after following a redirect, potentially leading to denial of service or resource exhaustion.",
+      "severity": "standard",
+      "score": 5.300000190734863
+    },
+    {
+      "purl": "pkg:npm/node-fetch@2.6.0",
+      "category": "vulnerabilities",
+      "id": "CVE-2022-0235",
+      "status": "warn",
+      "count": 1,
+      "title": "node-fetch exposes sensitive information to an unauthorized actor by forwarding secure headers to untrusted sites.",
+      "severity": "standard",
+      "score": 6.099999904632568
     }
   ]
 }
