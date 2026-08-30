@@ -1,0 +1,143 @@
+{
+  "schema": 3,
+  "generated": "2026-08-30T20:38:47+0000",
+  "manifest": "package-lock.json",
+  "scan": {
+    "timestamp": "2026-08-30T20:38:47Z",
+    "catalogue": 6,
+    "profile": "Open Source [baseline]",
+    "schema": 1
+  },
+  "findings": [
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2019-10744",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to Prototype Pollution via the defaultsDeep function.",
+      "severity": "standard",
+      "score": 9.100000381469727
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2020-28500",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to Regular Expression Denial of Service (ReDoS) via the toNumber, trim and trimEnd functions.",
+      "severity": "standard",
+      "score": 5.300000190734863
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2020-8203",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to prototype pollution when using _.zipObjectDeep.",
+      "severity": "standard",
+      "score": 7.400000095367432
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2021-23337",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to Command Injection via the template function.",
+      "severity": "standard",
+      "score": 7.199999809265137
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2025-13465",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to prototype pollution in the _.unset and _.omit functions, allowing an attacker to delete methods from global prototypes.",
+      "severity": "standard",
+      "score": 6.900000095367432
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2026-2950",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to prototype pollution via array path bypass in _.unset and _.omit functions.",
+      "severity": "standard",
+      "score": 5.300000190734863
+    },
+    {
+      "purl": "pkg:npm/lodash@4.17.11",
+      "category": "vulnerabilities",
+      "id": "CVE-2026-4800",
+      "status": "fail",
+      "count": 1,
+      "title": "Lodash is vulnerable to code injection via _.template imports key names, allowing an attacker to inject arbitrary code at template compilation time.",
+      "severity": "standard",
+      "score": 9.800000190734863
+    },
+    {
+      "purl": "pkg:npm/minimist@1.2.0",
+      "category": "vulnerabilities",
+      "id": "CVE-2020-7598",
+      "status": "fail",
+      "count": 1,
+      "title": "minimist is vulnerable to prototype pollution via a 'constructor' or '__proto__' payload.",
+      "severity": "standard",
+      "score": 5.599999904632568
+    },
+    {
+      "purl": "pkg:npm/minimist@1.2.0",
+      "category": "vulnerabilities",
+      "id": "CVE-2021-44906",
+      "status": "fail",
+      "count": 1,
+      "title": "Minimist is vulnerable to Prototype Pollution via the setKey function.",
+      "severity": "standard",
+      "score": 9.800000190734863
+    },
+    {
+      "purl": "pkg:npm/moment@2.29.1",
+      "category": "vulnerabilities",
+      "id": "CVE-2022-24785",
+      "status": "fail",
+      "count": 1,
+      "title": "Moment.js is vulnerable to a path traversal vulnerability when a user-provided locale string is directly used to switch moment locale.",
+      "severity": "standard",
+      "score": 7.5
+    },
+    {
+      "purl": "pkg:npm/moment@2.29.1",
+      "category": "vulnerabilities",
+      "id": "CVE-2022-31129",
+      "status": "fail",
+      "count": 1,
+      "title": "Moment.js is vulnerable to a Regular Expression Denial of Service (ReDoS) attack due to inefficient parsing algorithm.",
+      "severity": "standard",
+      "score": 7.5
+    },
+    {
+      "purl": "pkg:npm/node-fetch@2.6.0",
+      "category": "vulnerabilities",
+      "id": "CVE-2020-15168",
+      "status": "warn",
+      "count": 1,
+      "title": "node-fetch does not honor the size option after following a redirect, potentially leading to denial of service or resource exhaustion.",
+      "severity": "standard",
+      "score": 5.300000190734863
+    },
+    {
+      "purl": "pkg:npm/node-fetch@2.6.0",
+      "category": "vulnerabilities",
+      "id": "CVE-2022-0235",
+      "status": "warn",
+      "count": 1,
+      "title": "node-fetch exposes sensitive information to an unauthorized actor by forwarding secure headers to untrusted sites.",
+      "severity": "standard",
+      "score": 6.099999904632568
+    }
+  ]
+}
