@@ -56,6 +56,13 @@ tests cannot:
 7. **The wrapper.** Swap to the reusable workflow, dispatch once, confirm the
    inputs still thread through.
 
-The malware path cannot be manufactured this way — stripping the baseline only
-promotes findings already present in the scan, so a `🚨` alert needs a package
-the database actually flags.
+## The malware path
+
+Stripping the baseline only promotes findings already present in the scan, so
+a `🚨` alert needs a package the database actually flags. The fixture pins
+`ua-parser-js` at `0.7.28` for exactly this: `0.7.29` is the hijacked release,
+flagged as both `malware` and `tampering`. Bump to it and push — a `🚨` issue
+opens in the critical bucket (and `CVE-2021-4229`, the CVE for the hijack
+itself, lands as a genuinely new finding in the standard one). Revert and push
+— both issues get a resolution comment, the malware one without the siren.
+Nothing is ever installed; the lockfile only names the version.
