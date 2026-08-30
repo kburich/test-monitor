@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "description": "Deliberately outdated dependency set for exercising rl-protect-monitor. Never installed — the monitor only reads the lockfile and looks the packages up in the Spectra Assure database.",
+  "description": "Deliberately outdated dependency set for exercising rl-protect-monitor. Never installed \u2014 the monitor only reads the lockfile and looks the packages up in the Spectra Assure database.",
   "dependencies": {
     "lodash": "4.17.11",
     "minimist": "1.2.0",
     "moment": "2.29.1",
     "node-fetch": "2.6.0",
-    "ua-parser-js": "0.7.28"
+    "ua-parser-js": "0.7.29"
   }
 }

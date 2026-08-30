@@ -15,8 +15,10 @@
 name: Dependency monitor (test)
 
 on:
-  schedule:
-    - cron: "0 6,18 * * *"
+  push:
+    branches: [main]
+  # schedule:
+  #   - cron: "0 6,18 * * *"
   workflow_dispatch: {}
 
 jobs:
