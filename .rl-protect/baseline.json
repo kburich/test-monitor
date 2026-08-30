@@ -1,9 +1,9 @@
 {
   "schema": 3,
-  "generated": "2026-08-30T12:23:50+0000",
+  "generated": "2026-08-30T12:25:23+0000",
   "manifest": "package-lock.json",
   "scan": {
-    "timestamp": "2026-08-30T12:23:50Z",
+    "timestamp": "2026-08-30T12:25:22Z",
     "catalogue": 6,
     "profile": "Open Source [baseline]",
     "schema": 1
@@ -138,34 +138,6 @@
       "title": "node-fetch exposes sensitive information to an unauthorized actor by forwarding secure headers to untrusted sites.",
       "severity": "standard",
       "score": 6.099999904632568
-    },
-    {
-      "purl": "pkg:npm/ua-parser-js@0.7.29",
-      "category": "malware",
-      "id": "malware",
-      "status": "fail",
-      "count": 6,
-      "title": "6 supply chain attack artifacts",
-      "severity": "critical"
-    },
-    {
-      "purl": "pkg:npm/ua-parser-js@0.7.29",
-      "category": "tampering",
-      "id": "tampering",
-      "status": "fail",
-      "count": 1,
-      "title": "1 malware-like behaviors found",
-      "severity": "critical"
-    },
-    {
-      "purl": "pkg:npm/ua-parser-js@0.7.29",
-      "category": "vulnerabilities",
-      "id": "CVE-2021-4229",
-      "status": "warn",
-      "count": 1,
-      "title": "ua-parser-js contains a backdoor in its crypto mining component, allowing for potential malicious activity.",
-      "severity": "standard",
-      "score": 8.800000190734863
     }
   ]
 }
