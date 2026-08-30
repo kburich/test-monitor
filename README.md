@@ -56,6 +56,15 @@ tests cannot:
 7. **The wrapper.** Swap to the reusable workflow, dispatch once, confirm the
    inputs still thread through.
 
+## First-run alerting
+
+`alert-on-first-run` needs a monitor with no baseline. Rather than deleting
+the real one, give the run a throwaway `monitor-id` (say `first-run-test`)
+with `alert-on-first-run: "true"`: it gets its own baseline branch and its
+own rolling issues, so it is a genuine first run beside the real monitor, and
+the whole backlog lands as the new issue's body. Afterwards drop the override,
+delete `rl-protect-baseline/<id>` and close the orphaned issue by hand.
+
 ## The malware path
 
 Stripping the baseline only promotes findings already present in the scan, so
