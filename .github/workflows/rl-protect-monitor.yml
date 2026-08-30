@@ -15,8 +15,10 @@
 name: Dependency monitor (test)
 
 on:
-  schedule:
-    - cron: "0 6,18 * * *"
+  push:
+    branches: [main]
+  # schedule:
+  #   - cron: "0 6,18 * * *"
   workflow_dispatch: {}
 
 jobs:
@@ -42,6 +44,11 @@ jobs:
           # subscription cannot cover the malware issue, which does not exist
           # until the first 🚨 finding — assignment is what reaches someone.
           assignees: kburich
+          # First-run test: a fresh monitor id has no baseline, so this run
+          # is a first run — and with alert-on-first-run the whole backlog
+          # alerts instead of being absorbed silently.
+          monitor-id: first-run-test
+          alert-on-first-run: "true"
           # Auto-detection should pick package-lock.json; left implicit so the
           # detection order itself is under test.
 
