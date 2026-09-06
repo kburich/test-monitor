@@ -1,6 +1,6 @@
 # test-monitor
 
-Throwaway repo for testing [rl-protect-monitor](https://github.com/kburich/rl-protect-monitor)
+Throwaway repo for testing [dependency-monitor](https://github.com/kburich/dependency-monitor)
 end-to-end against real GitHub — issues, labels, orphan baseline branch,
 notification emails — rather than against unit fixtures.
 
@@ -26,8 +26,8 @@ packages keep the scan small, and scans are metered in entitlement units.
 workflow runs on every push to `main` and the cron is commented out; once it
 passes, drop the push trigger and re-enable the cron.
 
-The workflow pins the action at the branch under test, not `@v2` — see the
-comment at the top of `.github/workflows/rl-protect-monitor.yml` for why.
+The workflow pins the action at the branch under test, not `@v4` — see the
+comment at the top of `.github/workflows/dependency-monitor.yml` for why.
 
 ## The staircase (append-only issues)
 
@@ -42,7 +42,7 @@ tests cannot:
    its body untouched.
 2. **Quiet run.** Push a no-op. Expect no baseline commit and no comment.
 3. **New delta on an existing issue.** Strip a few finding records out of
-   `rl-protect-baseline/<id>:.rl-protect/baseline.json`, push there, then
+   `dependency-baseline/<id>:.rl-protect/baseline.json`, push there, then
    push a no-op to `main`. Those findings read as new: a comment lands on the
    open issue and the body — still the old stats page — is not edited.
 4. **Resolution comment.** Remove a package from the lockfile and push.
@@ -63,7 +63,7 @@ the real one, give the run a throwaway `monitor-id` (say `first-run-test`)
 with `alert-on-first-run: "true"`: it gets its own baseline branch and its
 own rolling issues, so it is a genuine first run beside the real monitor, and
 the whole backlog lands as the new issue's body. Afterwards drop the override,
-delete `rl-protect-baseline/<id>` and close the orphaned issue by hand.
+delete `dependency-baseline/<id>` and close the orphaned issue by hand.
 
 ## The malware path
 
