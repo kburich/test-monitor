@@ -1,8 +1,8 @@
-# Test harness for kburich/rl-protect-monitor.
+# Test harness for kburich/dependency-monitor.
 #
-# Pinned to the branch under test, not @v2: the reusable workflow
-# (rl-protect-monitor/.github/workflows/monitor.yml) hard-pins the action at
-# @v2 internally, so calling it would test the release rather than the working
+# Pinned to the branch under test, not @v4: the reusable workflow
+# (dependency-monitor/.github/workflows/monitor.yml) hard-pins the action at
+# @v4 internally, so calling it would test the release rather than the working
 # tree. Use the direct-action form while iterating, and switch to the reusable
 # form once as a separate check that its input plumbing is right.
 #
@@ -29,13 +29,13 @@ jobs:
     # twice in quick succession queues instead of cancelling — a cancelled run
     # may already have posted its delta without committing the baseline.
     concurrency:
-      group: rl-protect-monitor-${{ github.repository }}-${{ github.ref }}
+      group: dependency-monitor-${{ github.repository }}-${{ github.ref }}
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v7
 
       - id: rl
-        uses: kburich/rl-protect-monitor@main
+        uses: kburich/dependency-monitor@main
         with:
           rl-token: ${{ secrets.RL_TOKEN }}
           # Subscribes kburich when a rolling issue is opened. A thread
