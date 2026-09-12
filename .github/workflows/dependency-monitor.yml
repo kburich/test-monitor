@@ -1,57 +1,39 @@
 # Test harness for kburich/dependency-monitor.
 #
-# Pinned to the branch under test, not @v4: the reusable workflow
-# (dependency-monitor/.github/workflows/monitor.yml) hard-pins the action at
-# @v4 internally, so calling it would test the release rather than the working
-# tree. Use the direct-action form while iterating, and switch to the reusable
-# form once as a separate check that its input plumbing is right.
+# Staircase step 8: the reusable-workflow form, pinned at @v4. This checks
+# that the wrapper threads the inputs and secrets through and passes the
+# action's outputs up as job outputs. The direct-action form pinned at @main
+# is what the rest of the staircase runs — restore it afterwards.
 #
-# Twice daily. Each run spends Spectra Assure entitlement units, so the
-# cadence is deliberate — the database does not update faster than this.
-# workflow_dispatch stays for on-demand testing. While a staircase is being
-# walked, swap the schedule for `push: branches: [main]` so commits drive
-# the runs and a cron firing cannot land between two steps.
+# Pushes drive the runs while the staircase is being walked; restore the
+# cron afterwards:
+#   schedule:
+#     - cron: "0 6,18 * * *"
 
 name: Dependency monitor (test)
 
 on:
-  # Staircase in progress: pushes drive the runs. Restore the cron afterwards:
-  #   schedule:
-  #     - cron: "0 6,18 * * *"
   push:
     branches: [main]
   workflow_dispatch: {}
 
 jobs:
   monitor:
-    runs-on: ubuntu-latest
+    uses: kburich/dependency-monitor/.github/workflows/monitor.yml@v4
     permissions:
       contents: write   # baseline commit-back to the orphan branch
       issues: write     # rolling notification issues
-    # Matches the group used by the action's own examples, so dispatching
-    # twice in quick succession queues instead of cancelling — a cancelled run
-    # may already have posted its delta without committing the baseline.
-    concurrency:
-      group: dependency-monitor-${{ github.repository }}-${{ github.ref }}
-      cancel-in-progress: false
+    with:
+      assignees: kburich
+    secrets:
+      rl-token: ${{ secrets.RL_TOKEN }}
+
+  # The wrapper's outputs are half of its contract. Echo them from a second
+  # job so each is checkable from the run page.
+  outputs:
+    runs-on: ubuntu-latest
+    needs: monitor
     steps:
-      - uses: actions/checkout@v7
-
-      - id: rl
-        uses: kburich/dependency-monitor@main
-        with:
-          rl-token: ${{ secrets.RL_TOKEN }}
-          # Subscribes kburich when a rolling issue is opened. A thread
-          # subscription cannot cover the malware issue, which does not exist
-          # until the first 🚨 finding — assignment is what reaches someone.
-          assignees: kburich
-          # Auto-detection should pick package-lock.json; left implicit so the
-          # detection order itself is under test.
-
-      # The outputs are half of the contract, and the job summary does not
-      # show them. Echo them so each step of the staircase is checkable from
-      # the run page without downloading the delta artifact.
-      - name: Echo outputs
-        env:
-          OUTPUTS: ${{ toJSON(steps.rl.outputs) }}
+      - env:
+          OUTPUTS: ${{ toJSON(needs.monitor.outputs) }}
         run: echo "$OUTPUTS" | jq .
