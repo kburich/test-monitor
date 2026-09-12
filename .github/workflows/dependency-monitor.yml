@@ -1,21 +1,22 @@
 # Test harness for kburich/dependency-monitor.
 #
-# Staircase step 8b: alert-on-first-run under a throwaway monitor-id. The
-# id gives this run its own baseline branch and its own rolling issues, so
-# it is a genuine first run beside the real monitor, whose state it never
-# touches. Restore the direct-action form without the override afterwards,
-# delete dependency-baseline/first-run-test and close the orphaned issue.
+# Pinned to the branch under test, not @v4: the reusable workflow
+# (dependency-monitor/.github/workflows/monitor.yml) hard-pins the action at
+# @v4 internally, so calling it would test the release rather than the working
+# tree. Use the direct-action form while iterating, and switch to the reusable
+# form once as a separate check that its input plumbing is right.
 #
-# Pushes drive the runs while the staircase is being walked; restore the
-# cron afterwards:
-#   schedule:
-#     - cron: "0 6,18 * * *"
+# Twice daily. Each run spends Spectra Assure entitlement units, so the
+# cadence is deliberate — the database does not update faster than this.
+# workflow_dispatch stays for on-demand testing. While a staircase is being
+# walked, swap the schedule for `push: branches: [main]` so commits drive
+# the runs and a cron firing cannot land between two steps.
 
 name: Dependency monitor (test)
 
 on:
-  push:
-    branches: [main]
+  schedule:
+    - cron: "0 6,18 * * *"
   workflow_dispatch: {}
 
 jobs:
@@ -24,6 +25,9 @@ jobs:
     permissions:
       contents: write   # baseline commit-back to the orphan branch
       issues: write     # rolling notification issues
+    # Matches the group used by the action's own examples, so dispatching
+    # twice in quick succession queues instead of cancelling — a cancelled run
+    # may already have posted its delta without committing the baseline.
     concurrency:
       group: dependency-monitor-${{ github.repository }}-${{ github.ref }}
       cancel-in-progress: false
@@ -34,10 +38,16 @@ jobs:
         uses: kburich/dependency-monitor@main
         with:
           rl-token: ${{ secrets.RL_TOKEN }}
+          # Subscribes kburich when a rolling issue is opened. A thread
+          # subscription cannot cover the malware issue, which does not exist
+          # until the first 🚨 finding — assignment is what reaches someone.
           assignees: kburich
-          monitor-id: first-run-test
-          alert-on-first-run: "true"
+          # Auto-detection should pick package-lock.json; left implicit so the
+          # detection order itself is under test.
 
+      # The outputs are half of the contract, and the job summary does not
+      # show them. Echo them so each step of the staircase is checkable from
+      # the run page without downloading the delta artifact.
       - name: Echo outputs
         env:
           OUTPUTS: ${{ toJSON(steps.rl.outputs) }}
