@@ -1,9 +1,9 @@
 {
   "schema": 3,
-  "generated": "2026-09-07T04:20:04+0000",
+  "generated": "2026-09-12T09:13:25+0000",
   "manifest": "package-lock.json",
   "scan": {
-    "timestamp": "2026-09-07T04:20:04Z",
+    "timestamp": "2026-09-12T09:13:24Z",
     "catalogue": 6,
     "profile": "Open Source [baseline]",
     "schema": 1
@@ -118,6 +118,34 @@
       "title": "Moment.js is vulnerable to a Regular Expression Denial of Service (ReDoS) attack due to inefficient parsing algorithm.",
       "severity": "standard",
       "score": 7.5
+    },
+    {
+      "purl": "pkg:npm/ua-parser-js@0.7.29",
+      "category": "malware",
+      "id": "malware",
+      "status": "fail",
+      "count": 6,
+      "title": "6 supply chain attack artifacts",
+      "severity": "critical"
+    },
+    {
+      "purl": "pkg:npm/ua-parser-js@0.7.29",
+      "category": "tampering",
+      "id": "tampering",
+      "status": "fail",
+      "count": 1,
+      "title": "1 malware-like behaviors found",
+      "severity": "critical"
+    },
+    {
+      "purl": "pkg:npm/ua-parser-js@0.7.29",
+      "category": "vulnerabilities",
+      "id": "CVE-2021-4229",
+      "status": "warn",
+      "count": 1,
+      "title": "ua-parser-js contains a backdoor in its crypto mining component, allowing for potential malicious activity.",
+      "severity": "standard",
+      "score": 8.800000190734863
     }
   ]
 }
