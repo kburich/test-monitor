@@ -1,9 +1,10 @@
 # Test harness for kburich/dependency-monitor.
 #
-# Staircase step 8: the reusable-workflow form, pinned at @v4. This checks
-# that the wrapper threads the inputs and secrets through and passes the
-# action's outputs up as job outputs. The direct-action form pinned at @main
-# is what the rest of the staircase runs — restore it afterwards.
+# Staircase step 8b: alert-on-first-run under a throwaway monitor-id. The
+# id gives this run its own baseline branch and its own rolling issues, so
+# it is a genuine first run beside the real monitor, whose state it never
+# touches. Restore the direct-action form without the override afterwards,
+# delete dependency-baseline/first-run-test and close the orphaned issue.
 #
 # Pushes drive the runs while the staircase is being walked; restore the
 # cron afterwards:
@@ -19,21 +20,25 @@ on:
 
 jobs:
   monitor:
-    uses: kburich/dependency-monitor/.github/workflows/monitor.yml@v4
+    runs-on: ubuntu-latest
     permissions:
       contents: write   # baseline commit-back to the orphan branch
       issues: write     # rolling notification issues
-    with:
-      assignees: kburich
-    secrets:
-      rl-token: ${{ secrets.RL_TOKEN }}
-
-  # The wrapper's outputs are half of its contract. Echo them from a second
-  # job so each is checkable from the run page.
-  outputs:
-    runs-on: ubuntu-latest
-    needs: monitor
+    concurrency:
+      group: dependency-monitor-${{ github.repository }}-${{ github.ref }}
+      cancel-in-progress: false
     steps:
-      - env:
-          OUTPUTS: ${{ toJSON(needs.monitor.outputs) }}
+      - uses: actions/checkout@v7
+
+      - id: rl
+        uses: kburich/dependency-monitor@main
+        with:
+          rl-token: ${{ secrets.RL_TOKEN }}
+          assignees: kburich
+          monitor-id: first-run-test
+          alert-on-first-run: "true"
+
+      - name: Echo outputs
+        env:
+          OUTPUTS: ${{ toJSON(steps.rl.outputs) }}
         run: echo "$OUTPUTS" | jq .
